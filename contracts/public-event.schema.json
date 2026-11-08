@@ -1,0 +1,828 @@
+{
+  "$defs": {
+    "Budget": {
+      "additionalProperties": false,
+      "properties": {
+        "critique_attempts": {
+          "default": 0,
+          "minimum": 0,
+          "title": "Critique Attempts",
+          "type": "integer"
+        },
+        "frozen": {
+          "default": false,
+          "title": "Frozen",
+          "type": "boolean"
+        },
+        "limits": {
+          "$ref": "#/$defs/Limits"
+        },
+        "model_requests": {
+          "default": 0,
+          "minimum": 0,
+          "title": "Model Requests",
+          "type": "integer"
+        },
+        "research_requests": {
+          "default": 0,
+          "minimum": 0,
+          "title": "Research Requests",
+          "type": "integer"
+        },
+        "revisions": {
+          "default": 0,
+          "minimum": 0,
+          "title": "Revisions",
+          "type": "integer"
+        },
+        "usage": {
+          "$ref": "#/$defs/Usage"
+        }
+      },
+      "required": [
+        "limits"
+      ],
+      "title": "Budget",
+      "type": "object"
+    },
+    "BudgetEvent": {
+      "additionalProperties": false,
+      "properties": {
+        "payload": {
+          "$ref": "#/$defs/Budget"
+        },
+        "run_id": {
+          "title": "Run Id",
+          "type": "string"
+        },
+        "schema_version": {
+          "const": 1,
+          "default": 1,
+          "title": "Schema Version",
+          "type": "integer"
+        },
+        "seq": {
+          "exclusiveMinimum": 0,
+          "title": "Seq",
+          "type": "integer"
+        },
+        "timestamp": {
+          "format": "date-time",
+          "title": "Timestamp",
+          "type": "string"
+        },
+        "type": {
+          "const": "budget.updated",
+          "title": "Type",
+          "type": "string"
+        }
+      },
+      "required": [
+        "run_id",
+        "seq",
+        "timestamp",
+        "type",
+        "payload"
+      ],
+      "title": "BudgetEvent",
+      "type": "object"
+    },
+    "Critique": {
+      "additionalProperties": false,
+      "properties": {
+        "feedback": {
+          "items": {
+            "type": "string"
+          },
+          "maxItems": 32,
+          "title": "Feedback",
+          "type": "array"
+        },
+        "verdict": {
+          "enum": [
+            "pass",
+            "revise",
+            "insufficient_evidence"
+          ],
+          "title": "Verdict",
+          "type": "string"
+        },
+        "version": {
+          "minimum": 0,
+          "title": "Version",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "version",
+        "verdict",
+        "feedback"
+      ],
+      "title": "Critique",
+      "type": "object"
+    },
+    "CritiqueEvent": {
+      "additionalProperties": false,
+      "properties": {
+        "payload": {
+          "$ref": "#/$defs/Critique"
+        },
+        "run_id": {
+          "title": "Run Id",
+          "type": "string"
+        },
+        "schema_version": {
+          "const": 1,
+          "default": 1,
+          "title": "Schema Version",
+          "type": "integer"
+        },
+        "seq": {
+          "exclusiveMinimum": 0,
+          "title": "Seq",
+          "type": "integer"
+        },
+        "timestamp": {
+          "format": "date-time",
+          "title": "Timestamp",
+          "type": "string"
+        },
+        "type": {
+          "const": "critique.feedback",
+          "title": "Type",
+          "type": "string"
+        }
+      },
+      "required": [
+        "run_id",
+        "seq",
+        "timestamp",
+        "type",
+        "payload"
+      ],
+      "title": "CritiqueEvent",
+      "type": "object"
+    },
+    "Draft": {
+      "additionalProperties": false,
+      "properties": {
+        "evidence_ids": {
+          "items": {
+            "type": "string"
+          },
+          "maxItems": 128,
+          "title": "Evidence Ids",
+          "type": "array"
+        },
+        "reviewed": {
+          "default": false,
+          "title": "Reviewed",
+          "type": "boolean"
+        },
+        "text": {
+          "title": "Text",
+          "type": "string"
+        },
+        "validated": {
+          "default": false,
+          "title": "Validated",
+          "type": "boolean"
+        },
+        "version": {
+          "minimum": 0,
+          "title": "Version",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "version",
+        "text",
+        "evidence_ids"
+      ],
+      "title": "Draft",
+      "type": "object"
+    },
+    "DraftEvent": {
+      "additionalProperties": false,
+      "properties": {
+        "payload": {
+          "$ref": "#/$defs/Draft"
+        },
+        "run_id": {
+          "title": "Run Id",
+          "type": "string"
+        },
+        "schema_version": {
+          "const": 1,
+          "default": 1,
+          "title": "Schema Version",
+          "type": "integer"
+        },
+        "seq": {
+          "exclusiveMinimum": 0,
+          "title": "Seq",
+          "type": "integer"
+        },
+        "timestamp": {
+          "format": "date-time",
+          "title": "Timestamp",
+          "type": "string"
+        },
+        "type": {
+          "const": "draft.available",
+          "title": "Type",
+          "type": "string"
+        }
+      },
+      "required": [
+        "run_id",
+        "seq",
+        "timestamp",
+        "type",
+        "payload"
+      ],
+      "title": "DraftEvent",
+      "type": "object"
+    },
+    "Evidence": {
+      "additionalProperties": false,
+      "properties": {
+        "excerpt": {
+          "title": "Excerpt",
+          "type": "string"
+        },
+        "id": {
+          "maxLength": 128,
+          "minLength": 1,
+          "title": "Id",
+          "type": "string"
+        },
+        "source": {
+          "$ref": "#/$defs/Source"
+        }
+      },
+      "required": [
+        "id",
+        "source",
+        "excerpt"
+      ],
+      "title": "Evidence",
+      "type": "object"
+    },
+    "EvidenceEvent": {
+      "additionalProperties": false,
+      "properties": {
+        "payload": {
+          "$ref": "#/$defs/Evidence"
+        },
+        "run_id": {
+          "title": "Run Id",
+          "type": "string"
+        },
+        "schema_version": {
+          "const": 1,
+          "default": 1,
+          "title": "Schema Version",
+          "type": "integer"
+        },
+        "seq": {
+          "exclusiveMinimum": 0,
+          "title": "Seq",
+          "type": "integer"
+        },
+        "timestamp": {
+          "format": "date-time",
+          "title": "Timestamp",
+          "type": "string"
+        },
+        "type": {
+          "const": "evidence.added",
+          "title": "Type",
+          "type": "string"
+        }
+      },
+      "required": [
+        "run_id",
+        "seq",
+        "timestamp",
+        "type",
+        "payload"
+      ],
+      "title": "EvidenceEvent",
+      "type": "object"
+    },
+    "Limits": {
+      "additionalProperties": false,
+      "properties": {
+        "cost_usd": {
+          "anyOf": [
+            {
+              "exclusiveMinimum": 0.0,
+              "type": "number"
+            },
+            {
+              "type": "string"
+            }
+          ],
+          "default": "1.00",
+          "title": "Cost Usd"
+        },
+        "critique_attempts": {
+          "default": 3,
+          "exclusiveMinimum": 0,
+          "title": "Critique Attempts",
+          "type": "integer"
+        },
+        "hosted_actions": {
+          "default": 16,
+          "exclusiveMinimum": 0,
+          "title": "Hosted Actions",
+          "type": "integer"
+        },
+        "input_tokens": {
+          "default": 80000,
+          "exclusiveMinimum": 0,
+          "title": "Input Tokens",
+          "type": "integer"
+        },
+        "model_requests": {
+          "default": 16,
+          "exclusiveMinimum": 0,
+          "title": "Model Requests",
+          "type": "integer"
+        },
+        "output_per_request": {
+          "default": 2000,
+          "exclusiveMinimum": 0,
+          "title": "Output Per Request",
+          "type": "integer"
+        },
+        "output_tokens": {
+          "default": 16000,
+          "exclusiveMinimum": 0,
+          "title": "Output Tokens",
+          "type": "integer"
+        },
+        "research_requests": {
+          "default": 8,
+          "exclusiveMinimum": 0,
+          "title": "Research Requests",
+          "type": "integer"
+        },
+        "revisions": {
+          "default": 2,
+          "exclusiveMinimum": 0,
+          "title": "Revisions",
+          "type": "integer"
+        },
+        "timeout_seconds": {
+          "default": 300,
+          "exclusiveMinimum": 0,
+          "maximum": 300,
+          "title": "Timeout Seconds",
+          "type": "number"
+        }
+      },
+      "title": "Limits",
+      "type": "object"
+    },
+    "Revision": {
+      "additionalProperties": false,
+      "properties": {
+        "version": {
+          "exclusiveMinimum": 0,
+          "title": "Version",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "version"
+      ],
+      "title": "Revision",
+      "type": "object"
+    },
+    "RevisionEvent": {
+      "additionalProperties": false,
+      "properties": {
+        "payload": {
+          "$ref": "#/$defs/Revision"
+        },
+        "run_id": {
+          "title": "Run Id",
+          "type": "string"
+        },
+        "schema_version": {
+          "const": 1,
+          "default": 1,
+          "title": "Schema Version",
+          "type": "integer"
+        },
+        "seq": {
+          "exclusiveMinimum": 0,
+          "title": "Seq",
+          "type": "integer"
+        },
+        "timestamp": {
+          "format": "date-time",
+          "title": "Timestamp",
+          "type": "string"
+        },
+        "type": {
+          "const": "revision.started",
+          "title": "Type",
+          "type": "string"
+        }
+      },
+      "required": [
+        "run_id",
+        "seq",
+        "timestamp",
+        "type",
+        "payload"
+      ],
+      "title": "RevisionEvent",
+      "type": "object"
+    },
+    "SearchActivity": {
+      "additionalProperties": false,
+      "properties": {
+        "action": {
+          "enum": [
+            "search",
+            "open",
+            "find"
+          ],
+          "title": "Action",
+          "type": "string"
+        },
+        "query": {
+          "anyOf": [
+            {
+              "maxLength": 2048,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Query"
+        }
+      },
+      "required": [
+        "action"
+      ],
+      "title": "SearchActivity",
+      "type": "object"
+    },
+    "SearchEvent": {
+      "additionalProperties": false,
+      "properties": {
+        "payload": {
+          "$ref": "#/$defs/SearchActivity"
+        },
+        "run_id": {
+          "title": "Run Id",
+          "type": "string"
+        },
+        "schema_version": {
+          "const": 1,
+          "default": 1,
+          "title": "Schema Version",
+          "type": "integer"
+        },
+        "seq": {
+          "exclusiveMinimum": 0,
+          "title": "Seq",
+          "type": "integer"
+        },
+        "timestamp": {
+          "format": "date-time",
+          "title": "Timestamp",
+          "type": "string"
+        },
+        "type": {
+          "const": "search.activity",
+          "title": "Type",
+          "type": "string"
+        }
+      },
+      "required": [
+        "run_id",
+        "seq",
+        "timestamp",
+        "type",
+        "payload"
+      ],
+      "title": "SearchEvent",
+      "type": "object"
+    },
+    "Source": {
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "maxLength": 128,
+          "minLength": 1,
+          "title": "Id",
+          "type": "string"
+        },
+        "title": {
+          "maxLength": 1024,
+          "title": "Title",
+          "type": "string"
+        },
+        "url": {
+          "maxLength": 4096,
+          "title": "Url",
+          "type": "string"
+        }
+      },
+      "required": [
+        "id",
+        "url",
+        "title"
+      ],
+      "title": "Source",
+      "type": "object"
+    },
+    "Started": {
+      "additionalProperties": false,
+      "properties": {
+        "limits": {
+          "$ref": "#/$defs/Limits"
+        }
+      },
+      "required": [
+        "limits"
+      ],
+      "title": "Started",
+      "type": "object"
+    },
+    "StartedEvent": {
+      "additionalProperties": false,
+      "properties": {
+        "payload": {
+          "$ref": "#/$defs/Started"
+        },
+        "run_id": {
+          "title": "Run Id",
+          "type": "string"
+        },
+        "schema_version": {
+          "const": 1,
+          "default": 1,
+          "title": "Schema Version",
+          "type": "integer"
+        },
+        "seq": {
+          "exclusiveMinimum": 0,
+          "title": "Seq",
+          "type": "integer"
+        },
+        "timestamp": {
+          "format": "date-time",
+          "title": "Timestamp",
+          "type": "string"
+        },
+        "type": {
+          "const": "run.started",
+          "title": "Type",
+          "type": "string"
+        }
+      },
+      "required": [
+        "run_id",
+        "seq",
+        "timestamp",
+        "type",
+        "payload"
+      ],
+      "title": "StartedEvent",
+      "type": "object"
+    },
+    "Summary": {
+      "additionalProperties": false,
+      "properties": {
+        "summary": {
+          "maxLength": 2048,
+          "minLength": 1,
+          "title": "Summary",
+          "type": "string"
+        }
+      },
+      "required": [
+        "summary"
+      ],
+      "title": "Summary",
+      "type": "object"
+    },
+    "SummaryEvent": {
+      "additionalProperties": false,
+      "properties": {
+        "payload": {
+          "$ref": "#/$defs/Summary"
+        },
+        "run_id": {
+          "title": "Run Id",
+          "type": "string"
+        },
+        "schema_version": {
+          "const": 1,
+          "default": 1,
+          "title": "Schema Version",
+          "type": "integer"
+        },
+        "seq": {
+          "exclusiveMinimum": 0,
+          "title": "Seq",
+          "type": "integer"
+        },
+        "timestamp": {
+          "format": "date-time",
+          "title": "Timestamp",
+          "type": "string"
+        },
+        "type": {
+          "enum": [
+            "plan.summary",
+            "research.action"
+          ],
+          "title": "Type",
+          "type": "string"
+        }
+      },
+      "required": [
+        "run_id",
+        "seq",
+        "timestamp",
+        "type",
+        "payload"
+      ],
+      "title": "SummaryEvent",
+      "type": "object"
+    },
+    "Terminal": {
+      "additionalProperties": false,
+      "properties": {
+        "reason": {
+          "enum": [
+            "research_not_implemented",
+            "finished",
+            "insufficient_evidence",
+            "budget_exhausted",
+            "cancelled",
+            "deadline",
+            "execution_failed",
+            "memory_limit"
+          ],
+          "title": "Reason",
+          "type": "string"
+        },
+        "status": {
+          "enum": [
+            "completed",
+            "insufficient_evidence",
+            "limited",
+            "failed",
+            "cancelled",
+            "timed_out"
+          ],
+          "title": "Status",
+          "type": "string"
+        }
+      },
+      "required": [
+        "status",
+        "reason"
+      ],
+      "title": "Terminal",
+      "type": "object"
+    },
+    "TerminalEvent": {
+      "additionalProperties": false,
+      "properties": {
+        "payload": {
+          "$ref": "#/$defs/Terminal"
+        },
+        "run_id": {
+          "title": "Run Id",
+          "type": "string"
+        },
+        "schema_version": {
+          "const": 1,
+          "default": 1,
+          "title": "Schema Version",
+          "type": "integer"
+        },
+        "seq": {
+          "exclusiveMinimum": 0,
+          "title": "Seq",
+          "type": "integer"
+        },
+        "timestamp": {
+          "format": "date-time",
+          "title": "Timestamp",
+          "type": "string"
+        },
+        "type": {
+          "const": "run.terminal",
+          "title": "Type",
+          "type": "string"
+        }
+      },
+      "required": [
+        "run_id",
+        "seq",
+        "timestamp",
+        "type",
+        "payload"
+      ],
+      "title": "TerminalEvent",
+      "type": "object"
+    },
+    "Usage": {
+      "additionalProperties": false,
+      "properties": {
+        "cost_usd": {
+          "anyOf": [
+            {
+              "minimum": 0.0,
+              "type": "number"
+            },
+            {
+              "type": "string"
+            }
+          ],
+          "default": "0",
+          "title": "Cost Usd"
+        },
+        "hosted_actions": {
+          "default": 0,
+          "minimum": 0,
+          "title": "Hosted Actions",
+          "type": "integer"
+        },
+        "input_tokens": {
+          "default": 0,
+          "minimum": 0,
+          "title": "Input Tokens",
+          "type": "integer"
+        },
+        "output_tokens": {
+          "default": 0,
+          "minimum": 0,
+          "title": "Output Tokens",
+          "type": "integer"
+        }
+      },
+      "title": "Usage",
+      "type": "object"
+    }
+  },
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "discriminator": {
+    "mapping": {
+      "budget.updated": "#/$defs/BudgetEvent",
+      "critique.feedback": "#/$defs/CritiqueEvent",
+      "draft.available": "#/$defs/DraftEvent",
+      "evidence.added": "#/$defs/EvidenceEvent",
+      "plan.summary": "#/$defs/SummaryEvent",
+      "research.action": "#/$defs/SummaryEvent",
+      "revision.started": "#/$defs/RevisionEvent",
+      "run.started": "#/$defs/StartedEvent",
+      "run.terminal": "#/$defs/TerminalEvent",
+      "search.activity": "#/$defs/SearchEvent"
+    },
+    "propertyName": "type"
+  },
+  "oneOf": [
+    {
+      "$ref": "#/$defs/StartedEvent"
+    },
+    {
+      "$ref": "#/$defs/SummaryEvent"
+    },
+    {
+      "$ref": "#/$defs/SearchEvent"
+    },
+    {
+      "$ref": "#/$defs/EvidenceEvent"
+    },
+    {
+      "$ref": "#/$defs/DraftEvent"
+    },
+    {
+      "$ref": "#/$defs/CritiqueEvent"
+    },
+    {
+      "$ref": "#/$defs/RevisionEvent"
+    },
+    {
+      "$ref": "#/$defs/BudgetEvent"
+    },
+    {
+      "$ref": "#/$defs/TerminalEvent"
+    }
+  ],
+  "title": "PublicEvent"
+}

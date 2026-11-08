@@ -1,6 +1,6 @@
 # 001: Foundation
 
-Status: proposed; application implementation not started. Shared contracts and numerical limits: [architecture](../architecture.md).
+Status: implemented and locally verified on 2026-11-08. Shared contracts and numerical limits: [architecture](../architecture.md).
 
 ## Functional requirements
 
@@ -33,3 +33,12 @@ Every requirement must have passing focused tests and every acceptance case abov
 | F02 | A2, A5 |
 | F03 | A3, A4 |
 | F04 | A6 |
+
+
+## Foundation-specific behavior
+
+The default runner performs no research and ends `limited` with `research_not_implemented`. Integration tests inject fake runners. LangGraph and OpenAI SDK integration remain phase 002 work; their reserved package directories contain no provider implementation. Local configuration uses explicit typed Settings rather than loading secrets or environment files.
+
+Ownership uses `X-Run-Capability`. Unknown, expired and unauthorized access uniformly returns 404. Replay gaps return 409 before streaming; cursors falling behind during an open stream disconnect and require snapshot recovery. Four subscribers per run is the server ceiling. Terminal TTL cleanup is lazy on access and retained count is always bounded. API responses use no-store.
+
+Public event TypeScript definitions are generated from Pydantic JSON Schema. Both languages validate the same synthetic fixtures; schema drift is checked in CI. No external telemetry exporter or live model traffic is enabled by default.

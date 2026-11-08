@@ -1,0 +1,153 @@
+[
+  {
+    "payload": {
+      "limits": {
+        "cost_usd": "1.00",
+        "critique_attempts": 3,
+        "hosted_actions": 16,
+        "input_tokens": 80000,
+        "model_requests": 16,
+        "output_per_request": 2000,
+        "output_tokens": 16000,
+        "research_requests": 8,
+        "revisions": 2,
+        "timeout_seconds": 300.0
+      }
+    },
+    "run_id": "synthetic-run",
+    "schema_version": 1,
+    "seq": 1,
+    "timestamp": "2026-11-08T00:00:00Z",
+    "type": "run.started"
+  },
+  {
+    "payload": {
+      "summary": "Check public sources"
+    },
+    "run_id": "synthetic-run",
+    "schema_version": 1,
+    "seq": 2,
+    "timestamp": "2026-11-08T00:00:00Z",
+    "type": "plan.summary"
+  },
+  {
+    "payload": {
+      "summary": "Collect evidence"
+    },
+    "run_id": "synthetic-run",
+    "schema_version": 1,
+    "seq": 3,
+    "timestamp": "2026-11-08T00:00:00Z",
+    "type": "research.action"
+  },
+  {
+    "payload": {
+      "action": "search",
+      "query": "synthetic example"
+    },
+    "run_id": "synthetic-run",
+    "schema_version": 1,
+    "seq": 4,
+    "timestamp": "2026-11-08T00:00:00Z",
+    "type": "search.activity"
+  },
+  {
+    "payload": {
+      "excerpt": "Synthetic evidence",
+      "id": "e1",
+      "source": {
+        "id": "s1",
+        "title": "Example",
+        "url": "https://example.org"
+      }
+    },
+    "run_id": "synthetic-run",
+    "schema_version": 1,
+    "seq": 5,
+    "timestamp": "2026-11-08T00:00:00Z",
+    "type": "evidence.added"
+  },
+  {
+    "payload": {
+      "evidence_ids": [
+        "e1"
+      ],
+      "reviewed": false,
+      "text": "Synthetic draft",
+      "validated": false,
+      "version": 0
+    },
+    "run_id": "synthetic-run",
+    "schema_version": 1,
+    "seq": 6,
+    "timestamp": "2026-11-08T00:00:00Z",
+    "type": "draft.available"
+  },
+  {
+    "payload": {
+      "feedback": [
+        "Qualify claim"
+      ],
+      "verdict": "revise",
+      "version": 0
+    },
+    "run_id": "synthetic-run",
+    "schema_version": 1,
+    "seq": 7,
+    "timestamp": "2026-11-08T00:00:00Z",
+    "type": "critique.feedback"
+  },
+  {
+    "payload": {
+      "version": 1
+    },
+    "run_id": "synthetic-run",
+    "schema_version": 1,
+    "seq": 8,
+    "timestamp": "2026-11-08T00:00:00Z",
+    "type": "revision.started"
+  },
+  {
+    "payload": {
+      "critique_attempts": 0,
+      "frozen": false,
+      "limits": {
+        "cost_usd": "1.00",
+        "critique_attempts": 3,
+        "hosted_actions": 16,
+        "input_tokens": 80000,
+        "model_requests": 16,
+        "output_per_request": 2000,
+        "output_tokens": 16000,
+        "research_requests": 8,
+        "revisions": 2,
+        "timeout_seconds": 300.0
+      },
+      "model_requests": 0,
+      "research_requests": 0,
+      "revisions": 0,
+      "usage": {
+        "cost_usd": "0",
+        "hosted_actions": 0,
+        "input_tokens": 0,
+        "output_tokens": 0
+      }
+    },
+    "run_id": "synthetic-run",
+    "schema_version": 1,
+    "seq": 9,
+    "timestamp": "2026-11-08T00:00:00Z",
+    "type": "budget.updated"
+  },
+  {
+    "payload": {
+      "reason": "research_not_implemented",
+      "status": "limited"
+    },
+    "run_id": "synthetic-run",
+    "schema_version": 1,
+    "seq": 10,
+    "timestamp": "2026-11-08T00:00:00Z",
+    "type": "run.terminal"
+  }
+]

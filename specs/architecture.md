@@ -1,6 +1,6 @@
 # Proposed architecture and shared contracts
 
-Status: proposed implementation baseline, 2026-11-08. This assignment creates documentation only. All five phase triplets are normative together with this document; changing a shared contract requires updating affected phases. Phase order: 001 -> 002 -> 003 -> 004 -> 005.
+Status: proposed implementation baseline, 2026-11-08. Phase 001 foundation implementation is authorized; subsequent phases remain planned. All five phase triplets are normative together with this document; changing a shared contract requires updating affected phases. Phase order: 001 -> 002 -> 003 -> 004 -> 005.
 
 ## Decisions
 
@@ -14,7 +14,7 @@ Status: proposed implementation baseline, 2026-11-08. This assignment creates do
 
 ## Module ownership and contracts
 
-Proposed paths describe future code; none are created in this assignment.
+The paths below define module ownership. Phase 001 creates the structure and foundational contracts; later-phase services remain unimplemented.
 
 | Module | Input -> output | Dependency boundary |
 | --- | --- | --- |
@@ -78,3 +78,14 @@ Only absolute HTTP(S) citations without embedded credentials are rendered. Rejec
 Each phase defines requirement IDs, task dependencies and observable tests. Deterministic mocked tests are CI gates; optional live tests verify model/tool capabilities and quality within a separate explicit budget. Telemetry includes durations, counts, status, tokens and estimated cost, never question/web/draft bodies by default. No persistent session payloads in traces.
 
 Official references consulted 2026-11-08: [Responses hosted web search](https://developers.openai.com/api/docs/guides/tools-web-search), [GPT-6 Luna](https://developers.openai.com/api/docs/models/gpt-6-luna), [Codex subagents](https://learn.chatgpt.com/docs/agent-configuration/subagents), [Codex configuration](https://learn.chatgpt.com/docs/config-file/config-reference). Model/tool/account capability remains an implementation gate, not a claim that live integration was tested.
+
+
+## Foundation implementation decisions
+
+The phase 001 default runner terminates `limited` with the fixed reason `research_not_implemented`; it performs no research and makes no paid calls. Tests inject a controllable runner. Production graph execution starts in phase 002.
+
+Every endpoint uses `X-Run-Capability`. Unknown, expired and unauthorized run access uniformly returns 404, avoiding an unbounded tombstone registry and existence leaks. Run creation accepts no secrets. API validation errors return a generic message without echoing request bodies.
+
+Snapshots retain the latest public plan, action, budget, draft, critique and bounded evidence list independently of the replay ring. Event payloads are typed and contain public text only; private provider objects are never accepted. Each run permits four simultaneous stream subscribers. A stream cursor falling behind the ring disconnects; reconnect receives 409 and resynchronizes from snapshot. Heartbeats are comments, not sequenced events. Terminal events are always the final retained event.
+
+A missing usage reconciliation freezes the paid ledger; reservations for ambiguous results remain charged. Oversized actual usage freezes the ledger rather than permitting further calls. Pricing/version and tool-cap verification are required per attempt, with no default fictional prices. Foundation accepts caller-supplied conservative reservations; phase 002 owns verified tokenization and pricing integration.

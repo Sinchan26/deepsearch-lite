@@ -20,3 +20,10 @@ Run the acceptance cases in spec.md and relevant pytest/Vitest suites. Type-chec
 ## Risks and handling
 
 Provider capabilities and pricing may differ from assumptions: verify before paid calls and fail closed. Memory and replay are intentionally ephemeral: communicate expiration. Semantic citation support is fallible: use gold fixtures, structured critique and visible insufficient-evidence outcomes. See architecture.md for all mandatory safety limits.
+
+
+## Implemented layout
+
+`backend/app/domain` contains public models, future research contracts and ports; `policy` owns the ledger; `orchestration` owns the ephemeral registry; `api` owns HTTP/SSE/runtime lifecycle; `events` owns framing/heartbeat; `telemetry.py` instruments payload-free terminal metrics and spans. Future provider/evidence/drafting/critique packages are reserved only.
+
+`frontend` contains the React/Vite/Tailwind shell, Motion dependency, shadcn configuration and reserved workspace folders. `contracts` holds generated JSON schema and synthetic fixtures; frontend runtime validation and generated TypeScript use that schema. `scripts/export_contracts.py` checks drift. Root pyproject, dependency snapshot, npm lockfile and CI workflow establish reproducible checks. See README.md for complete structure and commands.

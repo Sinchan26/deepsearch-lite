@@ -8,6 +8,7 @@ Status: proposed; application implementation not started. Shared contracts and n
 - U02: Show structured critique, revision count, limits and terminal outcomes, including insufficient evidence, unreviewed partial answer and expired run.
 - U03: Implement typed fetch-SSE transport with in-memory capability, sequence deduplication, snapshot resync, cancellation and honest disconnect state.
 - U04: Use Tailwind, shadcn/ui and Motion with keyboard navigation, reduced motion, safe Markdown/link rendering and server-only API credentials.
+- U05: Make the colour combination of the page futuristic AI type sci-fi with excellent colour combination.
 
 ## Module contracts and dependency boundaries
 

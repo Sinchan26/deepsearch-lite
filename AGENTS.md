@@ -6,7 +6,7 @@ Read this file, relevant `.agents/skills/*/SKILL.md`, `.codex/` settings, and th
 
 Requirements live in `specs/`; shared decisions and contracts live in `specs/architecture.md`. Update conflicting specs before implementation. Map changes and tests to requirement IDs. Complete phases in dependency order; keep tasks unchecked until evidence exists. Report changes, checks and unresolved risks. Architect validates boundaries; reviewer checks correctness, safety and acceptance coverage. Delegate only when requested or when an applicable instruction authorizes it.
 
-The current assignment is documentation and development harness only. Do not implement application code until separately requested. Do not commit or push without instruction.
+Phase 001 foundation implementation is authorized. Later application phases require a separate request. Do not commit or push without instruction.
 
 ## Product boundaries
 
